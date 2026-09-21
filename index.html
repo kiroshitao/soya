@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ДМИТРИЙ СОЕВЫЙ — персональное социальное сопровождение</title>
+<meta name="description" content="Дискретное, легальное и строго неинтимное социальное сопровождение для тех, кто ценит время, такт и общение.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ivory:#f2ece1;
+  --warm:#e9e0cf;
+  --champagne:#e3cfa4;
+  --gold:#c8a765;
+  --gold-deep:#9a7b41;
+  --black:#060504;
+  --graphite:#14110d;
+  --silver:#c9c4bb;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--black);
+  color:var(--ivory);
+  font-family:'Manrope',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(200,167,101,.35);color:var(--ivory)}
+
+.grain{
+  position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 7s steps(6) infinite;
+  mix-blend-mode:overlay;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}
+  60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}
+}
+.vignette{
+  position:fixed;inset:0;z-index:55;pointer-events:none;
+  background:radial-gradient(ellipse 120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%);
+}
+
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:30px 5vw;
+  transition:background .8s var(--ease),padding .8s var(--ease),backdrop-filter .8s;
+}
+.nav.scrolled{
+  background:rgba(6,5,4,.72);
+  backdrop-filter:blur(14px);
+  padding:18px 5vw;
+  border-bottom:1px solid rgba(200,167,101,.12);
+}
+.brand{
+  font-family:'Prata',serif;font-size:13px;letter-spacing:.42em;
+  color:var(--ivory);text-decoration:none;white-space:nowrap;
+}
+.brand em{font-style:normal;color:var(--gold)}
+.nav-links{display:flex;gap:44px}
+.nav-links a{
+  position:relative;color:rgba(242,236,225,.62);text-decoration:none;
+  font-size:10px;letter-spacing:.34em;font-weight:400;text-transform:uppercase;
+  transition:color .5s;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:-7px;height:1px;width:100%;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease);
+}
+.nav-links a:hover{color:var(--champagne)}
+.nav-links a:hover::after{transform:scaleX(1)}
+
+.rv{opacity:0;transform:translateY(42px);transition:opacity 1.3s var(--ease),transform 1.3s var(--ease);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.line{display:block;overflow:hidden}
+.line>span{display:block;transform:translateY(118%);transition:transform 1.6s var(--ease);transition-delay:var(--d,0s)}
+.line.in>span,.ready .hero .line>span{transform:translateY(0)}
+
+.hero{
+  position:relative;min-height:100vh;overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 55% at 68% 42%,rgba(201,167,101,.13),transparent 62%),
+    radial-gradient(ellipse 90% 70% at 50% 108%,rgba(38,30,20,.9),transparent 70%),
+    linear-gradient(180deg,#080605 0%,#0a0806 55%,#060504 100%);
+}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.cloud{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:drift 46s ease-in-out infinite alternate}
+.c1{width:60vw;height:26vh;left:-14vw;top:8vh;background:radial-gradient(ellipse,rgba(226,205,164,.10),transparent 70%)}
+.c2{width:52vw;height:30vh;right:-12vw;top:44vh;background:radial-gradient(ellipse,rgba(201,167,101,.09),transparent 70%);animation-delay:-14s}
+.c3{width:70vw;height:24vh;left:12vw;bottom:-8vh;background:radial-gradient(ellipse,rgba(201,196,187,.07),transparent 70%);animation-delay:-28s}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(6vw,-2vh,0)}}
+.stars{position:absolute;inset:0;opacity:.8}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--champagne);opacity:.35;animation:tw 6s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.12}50%{opacity:.6}}
+
+.figure-wrap{
+  position:absolute;right:5vw;bottom:0;
+  width:clamp(320px,34vw,560px);
+  height:78vh;min-height:560px;
+  transform:translate3d(calc(var(--mx,0)*-16px),calc(var(--my,0)*-10px),0);
+  will-change:transform;
+}
+.figure-wrap::before{
+  content:'';position:absolute;left:50%;top:28%;width:170%;aspect-ratio:1;
+  transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(circle,rgba(227,207,164,.13),rgba(227,207,164,.045) 40%,transparent 66%);
+}
+.rings{
+  position:absolute;left:50%;top:36%;width:165%;aspect-ratio:1;
+  transform:translate(-50%,-50%) translate3d(calc(var(--mx,0)*10px),calc(var(--my,0)*6px),0);
+  pointer-events:none;
+}
+.ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(200,167,101,.22)}
+.r1{animation:spin 190s linear infinite}
+.r2{inset:-14%;border-color:rgba(201,196,187,.14);animation:spin 260s linear infinite reverse}
+.r3{inset:-30%;border-color:rgba(200,167,101,.12);border-style:dashed;animation:spin 320s linear infinite}
+.ring .orb{
+  position:absolute;top:-3px;left:50%;width:6px;height:6px;border-radius:50%;
+  background:var(--champagne);box-shadow:0 0 14px 3px rgba(227,207,164,.55);
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.r1{transform:rotate(0)}
+.wings{
+  position:absolute;left:50%;top:-6%;width:300%;
+  transform:translateX(-50%) translate3d(calc(var(--mx,0)*-26px),calc(var(--my,0)*-12px),0);
+  pointer-events:none;opacity:.9;
+  animation:breathe 13s ease-in-out infinite alternate;
+}
+@keyframes breathe{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(1.035)}}
+.figure{position:absolute;inset:0;overflow:hidden}
+.photo{
+  position:absolute;inset:0;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 58%,rgba(0,0,0,.85) 72%,rgba(0,0,0,.35) 86%,transparent 100%),linear-gradient(90deg,transparent 0%,#000 13% 87%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(180deg,#000 0%,#000 58%,rgba(0,0,0,.85) 72%,rgba(0,0,0,.35) 86%,transparent 100%),linear-gradient(90deg,transparent 0%,#000 13% 87%,transparent 100%);
+  mask-composite:intersect;
+}
+.photo img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0%;
+  filter:grayscale(1) contrast(1.14) brightness(.55) sepia(.3);
+}
+.figure .shade{display:none}
+.ornament{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;opacity:.6}
+.photo .glow{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0%;
+  filter:grayscale(1) brightness(.55) sepia(1) saturate(4.5) blur(22px);
+  mix-blend-mode:screen;opacity:.34;transform:translate(-1.5%,-1%) scale(1.03);
+}
+.frag{position:absolute;pointer-events:none;opacity:.5;filter:blur(.6px);animation:floaty 17s ease-in-out infinite alternate}
+.frag svg{width:100%;height:auto;display:block}
+.frag-1{width:120px;left:-16%;top:6%;animation-delay:-4s}
+.frag-2{width:150px;right:-14%;top:40%;animation-delay:-9s;opacity:.35}
+.frag-3{width:90px;left:-24%;top:56%;animation-delay:-13s;opacity:.3}
+@keyframes floaty{from{transform:translate3d(0,0,0) rotate(-1.5deg)}to{transform:translate3d(0,-26px,0) rotate(1.5deg)}}
+
+.glass{
+  position:absolute;z-index:6;
+  border-radius:26px;
+  border:1px solid rgba(242,236,225,.14);
+  background:linear-gradient(135deg,rgba(242,236,225,.10),rgba(242,236,225,.028) 42%,rgba(200,167,101,.07));
+  backdrop-filter:blur(20px) saturate(1.25);
+  -webkit-backdrop-filter:blur(20px) saturate(1.25);
+  box-shadow:0 34px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.10);
+  padding:26px 30px;
+  min-width:230px;max-width:280px;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.glass::before{
+  content:'';position:absolute;inset:0;border-radius:26px;pointer-events:none;
+  background:linear-gradient(115deg,rgba(255,176,120,.09),rgba(140,190,255,.07) 32%,rgba(255,255,255,.03) 55%,rgba(200,167,101,.10));
+  mix-blend-mode:screen;
+}
+.glass::after{
+  content:'';position:absolute;inset:8px;border-radius:18px;pointer-events:none;
+  border:1px solid rgba(200,167,101,.10);
+}
+.glass-in{animation:floaty 11s ease-in-out infinite alternate}
+.glass .idx{font-size:9px;letter-spacing:.4em;color:rgba(200,167,101,.75);display:block;margin-bottom:12px}
+.glass h3{
+  font-family:'Manrope',sans-serif;font-weight:500;font-size:11px;letter-spacing:.34em;
+  color:var(--ivory);text-transform:uppercase;
+  text-shadow:1px 0 rgba(120,190,255,.16),-1px 0 rgba(255,130,90,.16);
+}
+.glass .hair{height:1px;width:44px;margin:14px 0 12px;background:linear-gradient(90deg,var(--gold),transparent)}
+.glass p{font-size:11px;line-height:1.75;color:rgba(242,236,225,.55);letter-spacing:.04em}
+.g1{right:31vw;top:22vh}
+.g2{right:.5vw;top:62vh}
+.g3{right:25vw;top:68vh}
+.g2 .glass-in{animation-delay:-4s}
+.g3 .glass-in{animation-delay:-7s}
+
+.hero-copy{
+  position:absolute;left:5.5vw;top:50%;transform:translateY(-50%);
+  z-index:8;max-width:46vw;
+}
+.eyebrow{
+  font-size:10px;letter-spacing:.52em;color:rgba(200,167,101,.9);
+  text-transform:uppercase;margin-bottom:34px;font-weight:400;
+}
+.eyebrow::before{content:'';display:inline-block;width:44px;height:1px;background:var(--gold);vertical-align:middle;margin-right:18px;opacity:.7}
+h1.title{
+  font-family:'Prata',serif;font-weight:400;
+  font-size:clamp(56px,7.6vw,132px);
+  line-height:1.02;letter-spacing:.015em;
+  color:var(--ivory);
+  text-shadow:0 0 90px rgba(200,167,101,.18);
+}
+h1.title .line:nth-child(2)>span{transition-delay:.14s}
+.hero-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+  font-size:clamp(18px,1.55vw,26px);line-height:1.5;color:var(--champagne);
+  margin-top:34px;
+}
+.hero-sub .line>span{transition-delay:.3s}
+.hero-small{
+  margin-top:26px;font-size:12px;line-height:2;letter-spacing:.12em;
+  color:rgba(242,236,225,.5);
+}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:16px;
+  margin-top:44px;padding:19px 46px;overflow:hidden;
+  border:1px solid rgba(200,167,101,.5);
+  color:var(--champagne);text-decoration:none;
+  font-size:10px;letter-spacing:.44em;font-weight:500;text-transform:uppercase;
+  transition:color .6s,border-color .6s,box-shadow .8s;
+  background:rgba(6,5,4,.25);backdrop-filter:blur(6px);
+}
+.btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(100deg,transparent 20%,rgba(200,167,101,.28),transparent 80%);
+  transform:translateX(-120%);transition:transform 1.1s var(--ease);
+}
+.btn:hover{color:var(--ivory);border-color:rgba(227,207,164,.85);box-shadow:0 0 46px rgba(200,167,101,.16)}
+.btn:hover::before{transform:translateX(120%)}
+.btn i{width:5px;height:5px;background:var(--gold);transform:rotate(45deg);flex:none}
+.scroll-hint{
+  position:absolute;left:50%;bottom:34px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:12px;z-index:8;
+  font-size:9px;letter-spacing:.5em;color:rgba(242,236,225,.4);
+}
+.scroll-hint i{width:1px;height:52px;background:linear-gradient(180deg,var(--gold),transparent);animation:hint 2.8s var(--ease) infinite}
+@keyframes hint{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+.about{position:relative;min-height:130vh;overflow:hidden;display:flex;align-items:center}
+.scene{position:absolute;inset:-12% 0;will-change:transform}
+.scene svg{width:100%;height:100%;display:block}
+.scrim{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,#060504 0%,transparent 22% 74%,#060504 100%),
+    linear-gradient(90deg,rgba(6,5,4,.92) 8%,rgba(6,5,4,.55) 44%,rgba(6,5,4,.18) 75%,rgba(6,5,4,.5));
+}
+.about-inner{position:relative;z-index:2;padding:16vh 6vw 16vh 8vw;max-width:880px}
+.kicker{
+  font-size:10px;letter-spacing:.52em;color:rgba(200,167,101,.85);
+  text-transform:uppercase;margin-bottom:30px;font-weight:400;
+}
+.kicker::before{content:'';display:inline-block;width:36px;height:1px;background:var(--gold);vertical-align:middle;margin-right:16px;opacity:.7}
+h2.big{
+  font-family:'Prata',serif;font-weight:400;
+  font-size:clamp(38px,4.6vw,80px);line-height:1.1;letter-spacing:.01em;
+}
+h2.big .line:nth-child(2)>span{transition-delay:.12s}
+.quote{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;
+  font-size:clamp(20px,2vw,32px);line-height:1.55;color:var(--champagne);
+  margin-top:44px;max-width:640px;
+}
+.body-txt{margin-top:28px;font-size:13.5px;line-height:2.05;letter-spacing:.06em;color:rgba(242,236,225,.62);max-width:560px}
+.candle{animation:flick 3.4s ease-in-out infinite}
+.candle.b{animation-delay:-1.3s}
+.candle.c{animation-delay:-2.2s}
+@keyframes flick{0%,100%{opacity:.75}30%{opacity:1}55%{opacity:.6}75%{opacity:.95}}
+.dust circle{animation:floaty 15s ease-in-out infinite alternate}
+
+.formats{
+  position:relative;padding:20vh 6vw 24vh;overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 0%,rgba(200,167,101,.07),transparent 65%),
+    linear-gradient(180deg,#060504,#0d0b08 40%,#060504);
+}
+.marble{
+  position:absolute;inset:0;opacity:.05;pointer-events:none;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.05' numOctaves='4' seed='7'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+}
+.formats-head{display:flex;align-items:flex-end;justify-content:space-between;gap:6vw;margin-bottom:12vh}
+.formats-head p.note{font-size:12px;line-height:2;letter-spacing:.1em;color:rgba(242,236,225,.45);max-width:320px;text-align:right}
+.fgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:34px}
+.fcard{
+  position:relative;padding:52px 44px 58px;
+  background:linear-gradient(160deg,rgba(242,236,225,.05),rgba(242,236,225,.014) 60%);
+  border:1px solid rgba(242,236,225,.09);
+  border-radius:4px;
+  transition:transform 1s var(--ease),border-color .8s,box-shadow 1s,background .8s;
+  overflow:hidden;
+}
+.fcard::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:.5;transition:opacity .8s;
+}
+.fcard::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 90% 60% at 50% -10%,rgba(200,167,101,.12),transparent 60%);
+  opacity:0;transition:opacity 1s;
+}
+.fcard:hover{transform:translateY(-14px);border-color:rgba(200,167,101,.3);box-shadow:0 44px 90px rgba(0,0,0,.55)}
+.fcard:hover::after{opacity:1}
+.fcard .num{
+  font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.4em;
+  color:rgba(200,167,101,.8);
+}
+.fcard h3{
+  font-family:'Prata',serif;font-weight:400;font-size:clamp(22px,1.9vw,30px);
+  letter-spacing:.06em;margin-top:26px;color:var(--ivory);
+}
+.fcard .hair{width:38px;height:1px;margin:24px 0;background:linear-gradient(90deg,var(--gold),transparent)}
+.fcard p{font-size:12.5px;line-height:1.95;letter-spacing:.06em;color:rgba(242,236,225,.55)}
+.fc1{grid-column:1/6}
+.fc2{grid-column:7/12;margin-top:9vh}
+.fc3{grid-column:2/7;margin-top:2vh}
+.fc4{grid-column:8/13;margin-top:7vh}
+.fcard{animation:floaty 14s ease-in-out infinite alternate}
+.fc2{animation-delay:-3s}.fc3{animation-delay:-6s}.fc4{animation-delay:-9s}
+
+.principles{
+  position:relative;padding:24vh 6vw;text-align:center;overflow:hidden;
+  background:#040302;
+}
+.halo{
+  position:absolute;left:50%;top:44%;width:120vmin;height:120vmin;
+  transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(circle,rgba(200,167,101,.14),rgba(200,167,101,.05) 34%,transparent 62%);
+}
+.halo-ring{
+  position:absolute;left:50%;top:44%;width:74vmin;height:74vmin;border-radius:50%;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(200,167,101,.14);
+  animation:spin 200s linear infinite;
+}
+.halo-ring::before{
+  content:'';position:absolute;top:-4px;left:50%;width:7px;height:7px;border-radius:50%;
+  background:var(--champagne);box-shadow:0 0 18px 4px rgba(227,207,164,.5);
+}
+.principles h2{margin-top:36px}
+.plist{margin:9vh auto 0;max-width:760px;position:relative;z-index:2}
+.pitem{
+  display:flex;align-items:center;gap:34px;
+  padding:34px 10px;border-top:1px solid rgba(242,236,225,.08);
+  text-align:left;
+}
+.pitem:last-child{border-bottom:1px solid rgba(242,236,225,.08)}
+.pitem .n{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.3em;color:rgba(200,167,101,.7);flex:none;width:44px}
+.pitem h3{font-family:'Prata',serif;font-weight:400;font-size:clamp(18px,1.6vw,25px);letter-spacing:.1em;color:var(--ivory);flex:none;width:38%;text-align:left}
+.pitem p{font-size:12px;line-height:1.9;letter-spacing:.06em;color:rgba(242,236,225,.45)}
+.legal{margin-top:8vh;font-size:10px;letter-spacing:.3em;color:rgba(242,236,225,.32);text-transform:uppercase;position:relative;z-index:2}
+
+.final{
+  position:relative;padding:26vh 6vw 12vh;text-align:center;overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 44% at 50% 30%,rgba(200,167,101,.10),transparent 65%),
+    #060504;
+}
+.final h2{
+  font-family:'Prata',serif;font-weight:400;
+  font-size:clamp(40px,6vw,104px);line-height:1.14;letter-spacing:.02em;
+}
+.final h2 .line:nth-child(2)>span{transition-delay:.14s}
+.final h2 .line:nth-child(3)>span{transition-delay:.28s}
+.final h2 .line:nth-child(3)>span{color:var(--champagne)}
+.final .small{
+  margin-top:44px;font-size:12.5px;line-height:2.1;letter-spacing:.14em;
+  color:rgba(242,236,225,.5);
+}
+.final .btn{margin-top:56px}
+.contact-line{
+  margin-top:11vh;display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:14px 30px;
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,236,225,.38);
+}
+.contact-line a{
+  font-family:'Prata',serif;font-size:clamp(13px,1.15vw,17px);letter-spacing:.16em;text-transform:none;
+  color:var(--champagne);text-decoration:none;border-bottom:1px solid rgba(200,167,101,.35);
+  padding-bottom:5px;transition:color .6s,border-color .6s;
+}
+.contact-line a:hover{color:var(--ivory);border-color:rgba(227,207,164,.8)}
+footer{
+  margin-top:22vh;padding:44px 6vw;border-top:1px solid rgba(242,236,225,.07);
+  display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  font-size:9.5px;letter-spacing:.3em;color:rgba(242,236,225,.3);text-transform:uppercase;
+}
+
+.facts{position:relative;padding:11vh 6vw;background:#060504;border-top:1px solid rgba(242,236,225,.07);border-bottom:1px solid rgba(242,236,225,.07)}
+.facts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3vw;max-width:1500px;margin:0 auto}
+.fact{padding-right:2.4vw;border-right:1px solid rgba(242,236,225,.08)}
+.fact:last-child{border-right:none;padding-right:0}
+.fact b{display:block;font-family:'Prata',serif;font-weight:400;font-size:clamp(28px,3.2vw,54px);color:var(--champagne);letter-spacing:.02em;line-height:1}
+.fact span{display:block;margin-top:16px;font-size:10px;letter-spacing:.26em;color:rgba(242,236,225,.42);text-transform:uppercase;line-height:1.95}
+
+.bio{position:relative;padding:18vh 6vw;background:linear-gradient(180deg,#060504,#0c0a07 48%,#060504);overflow:hidden}
+.bio-inner{display:grid;grid-template-columns:.85fr 1.15fr;gap:6vw;align-items:center;max-width:1500px;margin:0 auto}
+.bio-visual{position:relative;aspect-ratio:.8;border:1px solid rgba(200,167,101,.18);overflow:hidden;background:radial-gradient(ellipse 75% 60% at 50% 28%,rgba(200,167,101,.12),#080605 72%)}
+.bio-visual img{
+  position:absolute;left:50%;bottom:0;transform:translateX(-50%);height:104%;width:auto;
+  filter:grayscale(1) contrast(1.1) brightness(.6) sepia(.22);
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 84%,transparent 99%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 84%,transparent 99%);
+}
+.bio-visual .cap{position:absolute;left:0;right:0;bottom:0;padding:18px 22px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,236,225,.5);background:linear-gradient(0deg,rgba(6,5,4,.9),transparent)}
+.bio-copy h2{margin-top:28px}
+.bio-copy .tx{margin-top:28px;font-size:13.5px;line-height:2.05;letter-spacing:.05em;color:rgba(242,236,225,.6);max-width:640px}
+.bio-copy .tx + .tx{margin-top:20px}
+.bio-list{margin-top:42px;display:grid;grid-template-columns:1fr 1fr;gap:16px 40px}
+.bio-list div{position:relative;padding-left:22px;font-size:11.5px;letter-spacing:.1em;line-height:1.8;color:rgba(242,236,225,.5)}
+.bio-list div::before{content:'';position:absolute;left:0;top:9px;width:9px;height:1px;background:var(--gold);opacity:.8}
+.bio-sign{margin-top:42px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(19px,1.6vw,26px);line-height:1.6;color:var(--champagne);max-width:560px}
+
+.steps{position:relative;padding:20vh 6vw;background:linear-gradient(180deg,#060504,#0f0b07 45%,#060504);overflow:hidden}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.6vw;margin:10vh auto 0;max-width:1500px}
+.step{position:relative;padding-top:36px;border-top:1px solid rgba(242,236,225,.13)}
+.step::after{content:'';position:absolute;top:-4px;left:0;width:8px;height:8px;background:var(--gold);transform:rotate(45deg);opacity:.75}
+.step b{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.36em;color:rgba(200,167,101,.85)}
+.step h3{font-family:'Prata',serif;font-weight:400;font-size:clamp(17px,1.45vw,23px);letter-spacing:.07em;margin:20px 0 16px;color:var(--ivory)}
+.step p{font-size:12px;line-height:1.95;letter-spacing:.05em;color:rgba(242,236,225,.5)}
+.steps-note{margin-top:8vh;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(17px,1.4vw,22px);color:rgba(227,207,164,.8)}
+
+.geo{position:relative;padding:18vh 6vw;background:#070605;overflow:hidden}
+.geo-head{text-align:center;margin-bottom:11vh}
+.geo-grid{display:grid;grid-template-columns:1fr 1fr;gap:7vw;max-width:1500px;margin:0 auto}
+.city{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:20px 0;border-bottom:1px solid rgba(242,236,225,.08)}
+.city b{font-family:'Prata',serif;font-weight:400;font-size:clamp(17px,1.5vw,24px);letter-spacing:.05em;color:var(--ivory)}
+.city span{font-size:9px;letter-spacing:.3em;color:rgba(200,167,101,.7);text-transform:uppercase;white-space:nowrap}
+.season{display:flex;gap:26px;padding:22px 0;border-bottom:1px solid rgba(242,236,225,.08)}
+.season b{flex:none;width:84px;font-size:9.5px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;padding-top:5px}
+.season p{font-size:12.5px;line-height:1.9;letter-spacing:.04em;color:rgba(242,236,225,.55)}
+.geo-note{margin-top:28px;font-size:11px;line-height:2;letter-spacing:.1em;color:rgba(242,236,225,.4)}
+
+.excl{margin:9vh auto 0;max-width:860px;padding:46px 50px;border:1px solid rgba(200,167,101,.16);background:linear-gradient(160deg,rgba(242,236,225,.035),transparent 70%);position:relative;z-index:2;text-align:left}
+.excl h3{font-family:'Prata',serif;font-weight:400;font-size:clamp(15px,1.35vw,20px);letter-spacing:.1em;color:var(--ivory);text-align:center}
+.excl ul{list-style:none;margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:14px 34px}
+.excl li{position:relative;padding-left:20px;font-size:11.5px;line-height:1.85;letter-spacing:.06em;color:rgba(242,236,225,.5)}
+.excl li::before{content:'—';position:absolute;left:0;color:rgba(200,167,101,.75)}
+
+.voices{position:relative;padding:18vh 6vw;background:linear-gradient(180deg,#060504,#0a0806 60%,#060504);overflow:hidden}
+.voices-head{text-align:center;margin-bottom:9vh}
+.voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4vw;max-width:1500px;margin:0 auto}
+.voice{position:relative;padding:46px 42px;border:1px solid rgba(242,236,225,.08);background:linear-gradient(160deg,rgba(242,236,225,.045),transparent 62%);transition:border-color .8s,transform 1s var(--ease)}
+.voice:hover{border-color:rgba(200,167,101,.28);transform:translateY(-10px)}
+.voice::before{content:'';position:absolute;top:0;left:42px;width:44px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.voice q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,1.2vw,20px);line-height:1.75;color:var(--warm)}
+.voice .who{margin-top:30px;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(200,167,101,.75)}
+.voices-note{margin-top:6vh;text-align:center;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(242,236,225,.3)}
+
+.faq{position:relative;padding:18vh 6vw 22vh;background:linear-gradient(180deg,#060504,#090705);overflow:hidden}
+.faq-head{text-align:center}
+.faq-list{max-width:1000px;margin:9vh auto 0}
+.qa{border-top:1px solid rgba(242,236,225,.09)}
+.qa:last-child{border-bottom:1px solid rgba(242,236,225,.09)}
+.qa summary{list-style:none;cursor:pointer;position:relative;padding:30px 64px 30px 0;font-family:'Prata',serif;font-size:clamp(15px,1.35vw,21px);letter-spacing:.06em;color:var(--ivory);transition:color .5s}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:'+';position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:'Manrope',sans-serif;font-weight:200;font-size:24px;color:var(--gold);transition:transform .7s var(--ease)}
+.qa[open] summary::after{transform:translateY(-50%) rotate(135deg)}
+.qa summary:hover{color:var(--champagne)}
+.qa p{padding:0 64px 34px 0;font-size:12.5px;line-height:2.05;letter-spacing:.05em;color:rgba(242,236,225,.55)}
+
+.sh{text-align:center;margin-bottom:10vh}
+.timeline{position:relative;padding:18vh 6vw;background:#060504;overflow:hidden}
+.tl{display:grid;grid-template-columns:repeat(5,1fr);max-width:1500px;margin:0 auto;position:relative}
+.tl::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,167,101,.45) 12%,rgba(200,167,101,.45) 88%,transparent)}
+.tl-i{position:relative;padding:42px 28px 0 0}
+.tl-i::before{content:'';position:absolute;top:-4px;left:0;width:8px;height:8px;background:var(--gold);transform:rotate(45deg)}
+.tl-i b{display:block;font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.3em;color:var(--champagne)}
+.tl-i h3{font-family:'Prata',serif;font-weight:400;font-size:clamp(14px,1.15vw,18px);letter-spacing:.1em;margin:14px 0 10px;color:var(--ivory)}
+.tl-i p{font-size:11.5px;line-height:1.9;letter-spacing:.05em;color:rgba(242,236,225,.48)}
+.tl-note{margin-top:8vh;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,1.3vw,21px);color:rgba(227,207,164,.75)}
+
+.dates{position:relative;padding:17vh 6vw;background:linear-gradient(180deg,#060504,#0a0806);overflow:hidden}
+.dt-list{max-width:1300px;margin:0 auto;border-top:1px solid rgba(242,236,225,.09)}
+.dt{display:grid;grid-template-columns:150px 1fr 1.5fr auto;gap:24px;align-items:baseline;padding:24px 0;border-bottom:1px solid rgba(242,236,225,.08)}
+.dt b{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.2em;color:var(--champagne);font-weight:400}
+.dt .city{font-family:'Prata',serif;font-size:clamp(14px,1.1vw,17px);letter-spacing:.06em;color:var(--ivory)}
+.dt .ev{font-size:12px;line-height:1.8;letter-spacing:.05em;color:rgba(242,236,225,.5)}
+.dt i{font-style:normal;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(200,167,101,.8);white-space:nowrap}
+
+.presence{position:relative;padding:18vh 6vw;background:#070605;overflow:hidden}
+.presence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4vw;max-width:1500px;margin:0 auto}
+.pcard{padding:46px 42px;border:1px solid rgba(242,236,225,.09);background:linear-gradient(160deg,rgba(242,236,225,.045),transparent 62%);transition:border-color .8s,transform 1s var(--ease)}
+.pcard:hover{border-color:rgba(200,167,101,.28);transform:translateY(-10px)}
+.pcard h3{font-family:'Prata',serif;font-weight:400;font-size:clamp(16px,1.4vw,21px);letter-spacing:.1em;color:var(--ivory)}
+.pcard small{display:block;margin-top:14px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,167,101,.8)}
+.pcard p{margin-top:22px;font-size:12px;line-height:1.95;letter-spacing:.05em;color:rgba(242,236,225,.52)}
+.pcard ul{list-style:none;margin-top:24px;display:grid;gap:11px}
+.pcard li{position:relative;padding-left:18px;font-size:11px;line-height:1.8;letter-spacing:.06em;color:rgba(242,236,225,.45)}
+.pcard li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:1px;background:var(--gold);opacity:.7}
+.presence-note{margin-top:7vh;text-align:center;font-size:10.5px;line-height:2.1;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,236,225,.32)}
+
+.etq{position:relative;padding:18vh 6vw;background:linear-gradient(180deg,#060504,#0c0a07 50%,#060504);overflow:hidden}
+.etq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4vw;max-width:1500px;margin:0 auto}
+.etq-col h3{font-family:'Prata',serif;font-weight:400;font-size:clamp(15px,1.3vw,20px);letter-spacing:.09em;color:var(--ivory);padding-bottom:22px;border-bottom:1px solid rgba(200,167,101,.3);min-height:4.2em;display:flex;align-items:flex-end}
+.etq-col ol{list-style:none;counter-reset:e}
+.etq-col li{counter-increment:e;position:relative;padding:20px 0 20px 42px;border-bottom:1px solid rgba(242,236,225,.07);font-size:12px;line-height:1.9;letter-spacing:.05em;color:rgba(242,236,225,.52)}
+.etq-col li::before{content:counter(e,decimal-leading-zero);position:absolute;left:0;top:20px;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.2em;color:rgba(200,167,101,.75)}
+
+.notes{position:relative;padding:18vh 6vw;background:#060504;overflow:hidden}
+.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4vw;max-width:1500px;margin:0 auto}
+.note{padding:44px 40px;border-top:1px solid rgba(200,167,101,.25);background:linear-gradient(180deg,rgba(242,236,225,.035),transparent 72%)}
+.note b{display:block;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(200,167,101,.75)}
+.note h3{font-family:'Prata',serif;font-weight:400;font-size:clamp(16px,1.35vw,20px);letter-spacing:.07em;margin:20px 0 18px;color:var(--ivory)}
+.note p{font-size:12px;line-height:2;letter-spacing:.05em;color:rgba(242,236,225,.5)}
+
+@media (max-width:1180px){
+  .hero-copy{max-width:56vw}
+  .g1{right:34vw;top:16vh}
+  .g3{right:30vw;top:74vh}
+}
+@media (max-width:900px){
+  .nav-links{gap:24px}
+  .nav-links a{font-size:9px;letter-spacing:.22em}
+  .hero{min-height:auto;padding-top:120px}
+  .hero-copy{position:relative;left:0;top:0;transform:none;max-width:none;padding:0 8vw}
+  .figure-wrap{position:relative;right:0;margin:8vh auto 0;width:min(78vw,440px);height:76vh}
+  .glass{display:none}
+  .scroll-hint{display:none}
+  .fgrid{grid-template-columns:1fr}
+  .fc1,.fc2,.fc3,.fc4{grid-column:1/-1;margin-top:0}
+  .formats-head{flex-direction:column;align-items:flex-start}
+  .formats-head p.note{text-align:left}
+  .pitem{flex-direction:column;align-items:flex-start;gap:12px}
+  .pitem h3{width:auto}
+  .about-inner{padding:14vh 8vw}
+  .facts-grid{grid-template-columns:1fr 1fr;gap:38px}
+  .fact{border-right:none;padding-right:0}
+  .bio-inner,.geo-grid{grid-template-columns:1fr;gap:64px}
+  .bio-list{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr;gap:46px}
+  .voices-grid{grid-template-columns:1fr;gap:26px}
+  .tl{grid-template-columns:1fr;gap:0}
+  .tl::before{display:none}
+  .tl-i{padding:30px 0 30px 34px;border-bottom:1px solid rgba(242,236,225,.08)}
+  .tl-i::before{top:38px}
+  .dt{grid-template-columns:1fr;gap:8px}
+  .presence-grid,.etq-grid,.notes-grid{grid-template-columns:1fr;gap:26px}
+  .etq-col{gap:0}
+  .excl{padding:34px 28px}
+  .excl ul{grid-template-columns:1fr}
+  .qa p{padding-right:0}
+}
+@media (max-width:640px){
+  .nav-links a:nth-child(n+2):nth-child(-n+5){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.2s!important}
+  .rv,.line>span{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="vignette"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top">ДМИТРИЙ <em>СОЕВЫЙ</em></a>
+  <nav class="nav-links">
+    <a href="#about">О сервисе</a>
+    <a href="#bio">Практика</a>
+    <a href="#formats">Форматы</a>
+    <a href="#steps">Порядок</a>
+    <a href="#principles">Принципы</a>
+    <a href="#faq">Вопросы</a>
+    <a href="#kontakt">Контакт</a>
+  </nav>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-bg">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <div class="figure-wrap" id="figureWrap">
+    <div class="rings">
+      <i class="ring r1"><b class="orb"></b></i>
+      <i class="ring r2"></i>
+      <i class="ring r3"></i>
+    </div>
+
+    <svg class="wings" viewBox="0 0 1600 760" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="fab" x1="0" y1="0" x2="1" y2="0.4">
+          <stop offset="0" stop-color="#f2ece1" stop-opacity="0"/>
+          <stop offset="0.55" stop-color="#e9dcc0" stop-opacity="0.18"/>
+          <stop offset="1" stop-color="#c8a765" stop-opacity="0.32"/>
+        </linearGradient>
+        <linearGradient id="goldl" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#c8a765" stop-opacity="0"/>
+          <stop offset="0.6" stop-color="#e3cfa4" stop-opacity="0.55"/>
+          <stop offset="1" stop-color="#f6e7c4" stop-opacity="0.8"/>
+        </linearGradient>
+        <filter id="wb" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="9"/>
+        </filter>
+      </defs>
+      <g filter="url(#wb)">
+        <path d="M800 400 C640 210 420 130 180 168 C360 226 470 300 560 392 C440 366 300 372 190 424 C360 442 480 486 570 552 C480 556 380 582 310 632 C480 630 660 596 800 480 Z" fill="url(#fab)"/>
+        <path d="M800 400 C960 210 1180 130 1420 168 C1240 226 1130 300 1040 392 C1160 366 1300 372 1410 424 C1240 442 1120 486 1030 552 C1120 556 1220 582 1290 632 C1120 630 940 596 800 480 Z" fill="url(#fab)"/>
+      </g>
+      <g stroke="url(#goldl)" stroke-width="1.6" fill="none" opacity="0.85">
+        <path d="M800 402 C650 232 430 152 196 186"/>
+        <path d="M800 420 C640 320 430 300 208 420"/>
+        <path d="M800 446 C660 430 500 470 330 620"/>
+        <path d="M800 402 C950 232 1170 152 1404 186"/>
+        <path d="M800 420 C960 320 1170 300 1392 420"/>
+        <path d="M800 446 C940 430 1100 470 1270 620"/>
+      </g>
+      <g fill="#e3cfa4">
+        <circle cx="238" cy="200" r="1.6" opacity=".5"/>
+        <circle cx="1362" cy="200" r="1.6" opacity=".5"/>
+        <circle cx="330" cy="612" r="1.3" opacity=".4"/>
+        <circle cx="1270" cy="612" r="1.3" opacity=".4"/>
+      </g>
+    </svg>
+
+    <div class="frag frag-1">
+      <svg viewBox="0 0 120 220" fill="none">
+        <g stroke="#e9e0cf" stroke-opacity=".5">
+          <path d="M18 30 H102 M14 42 H106 M26 42 V196 M46 42 V196 M66 42 V196 M86 42 V196 M14 196 H106 M10 208 H110"/>
+        </g>
+      </svg>
+    </div>
+    <div class="frag frag-2">
+      <svg viewBox="0 0 160 120" fill="none">
+        <g stroke="#e9e0cf" stroke-opacity=".45">
+          <path d="M8 96 L80 18 L152 96 M28 96 H132 M40 84 H120"/>
+          <path d="M60 96 V60 M100 96 V60"/>
+        </g>
+      </svg>
+    </div>
+    <div class="frag frag-3">
+      <svg viewBox="0 0 90 160" fill="none">
+        <g stroke="#e9e0cf" stroke-opacity=".4">
+          <path d="M12 20 H78 M16 30 H74 M24 30 V132 M44 30 V132 M64 30 V132 M12 132 H78"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="figure">
+      <div class="photo">
+        <img class="glow" src="assets/portrait.png" alt="" aria-hidden="true">
+        <img src="assets/portrait.png" alt="Дмитрий Соевый">
+      </div>
+      <svg class="ornament" viewBox="0 0 860 1440" preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
+        <defs>
+          <radialGradient id="bg1" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#f6e7c4" stop-opacity=".8"/>
+            <stop offset="1" stop-color="#c8a765" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="430" cy="1252" r="34" fill="url(#bg1)" opacity=".5"/>
+        <circle cx="430" cy="1252" r="7" fill="#e3cfa4" opacity=".9"/>
+        <g stroke="#c8a765" stroke-width="1.6" opacity=".32" fill="none">
+          <path d="M430 1252 C372 1216 330 1240 314 1298"/>
+          <path d="M430 1252 C488 1216 530 1240 546 1298"/>
+        </g>
+        <g stroke="#e3cfa4" stroke-width="1.1" opacity=".18" fill="none">
+          <path d="M118 1046 C210 992 300 992 366 1036"/>
+          <path d="M742 1046 C650 992 560 992 494 1036"/>
+          <path d="M150 906 C236 986 314 1064 356 1180"/>
+          <path d="M760 930 C700 1010 640 1090 602 1200"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="glass g1" data-depth="20">
+    <div class="glass-in">
+      <span class="idx">I</span>
+      <h3>Конфиденциальность</h3>
+      <div class="hair"></div>
+      <p>Полная приватность знакомства, переписки и каждого согласованного формата.</p>
+    </div>
+  </div>
+  <div class="glass g2" data-depth="30">
+    <div class="glass-in">
+      <span class="idx">II</span>
+      <h3>Индивидуальный формат</h3>
+      <div class="hair"></div>
+      <p>Сценарий общения, ритм и границы обсуждаются заранее и лично.</p>
+    </div>
+  </div>
+  <div class="glass g3" data-depth="14">
+    <div class="glass-in">
+      <span class="idx">III</span>
+      <h3>Личные границы</h3>
+      <div class="hair"></div>
+      <p>Уважение к вашему пространству — безусловное и неизменное правило.</p>
+    </div>
+  </div>
+
+  <div class="hero-copy">
+    <p class="eyebrow rv" style="--d:.1s">Закрытая светская практика</p>
+    <h1 class="title">
+      <span class="line"><span>ДМИТРИЙ</span></span>
+      <span class="line"><span>СОЕВЫЙ</span></span>
+    </h1>
+    <p class="hero-sub"><span class="line"><span>Персональное социальное сопровождение<br>для тех, кто ценит время, такт и общение.</span></span></p>
+    <p class="hero-small rv" style="--d:.55s">Культурные и светские мероприятия,<br>деловые встречи, ужины, путешествия<br>и индивидуальный формат общения.</p>
+    <a class="btn rv" style="--d:.75s" href="#formats"><i></i>Узнать о формате</a>
+  </div>
+
+  <div class="scroll-hint"><span>Листайте</span><i></i></div>
+</section>
+
+<section class="about" id="about">
+  <div class="scene" id="scene">
+    <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#0b0906"/>
+          <stop offset="0.6" stop-color="#181209"/>
+          <stop offset="1" stop-color="#0a0705"/>
+        </linearGradient>
+        <radialGradient id="win" cx="0.5" cy="0.35" r="0.8">
+          <stop offset="0" stop-color="#241d12"/>
+          <stop offset="1" stop-color="#0b0806"/>
+        </radialGradient>
+        <radialGradient id="cdl" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#ffd9a0" stop-opacity=".95"/>
+          <stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="vol" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#e6c98f" stop-opacity=".16"/>
+          <stop offset="1" stop-color="#e6c98f" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="shaft" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#e8cf9e" stop-opacity=".14"/>
+          <stop offset="1" stop-color="#e8cf9e" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="b6"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="b18"><feGaussianBlur stdDeviation="18"/></filter>
+        <filter id="b40"><feGaussianBlur stdDeviation="40"/></filter>
+      </defs>
+      <rect width="1600" height="1000" fill="url(#wall)"/>
+      <g>
+        <path d="M270 660 V330 Q400 150 530 330 V660 Z" fill="url(#win)" stroke="#c8a765" stroke-opacity=".3"/>
+        <path d="M670 660 V330 Q800 150 930 330 V660 Z" fill="url(#win)" stroke="#c8a765" stroke-opacity=".3"/>
+        <path d="M1070 660 V330 Q1200 150 1330 330 V660 Z" fill="url(#win)" stroke="#c8a765" stroke-opacity=".3"/>
+        <g fill="#e8d8b0">
+          <circle cx="360" cy="300" r="1.6" opacity=".5"/><circle cx="450" cy="250" r="1.2" opacity=".4"/>
+          <circle cx="760" cy="280" r="1.6" opacity=".5"/><circle cx="860" cy="230" r="1.2" opacity=".35"/>
+          <circle cx="1160" cy="300" r="1.6" opacity=".5"/><circle cx="1250" cy="250" r="1.2" opacity=".4"/>
+          <circle cx="800" cy="330" r="9" opacity=".5" filter="url(#b6)"/>
+        </g>
+      </g>
+      <g stroke="#e9e0cf" stroke-opacity=".08">
+        <path d="M120 120 V700 M140 120 V700 M600 120 V700 M620 120 V700 M980 120 V700 M1000 120 V700 M1460 120 V700 M1480 120 V700"/>
+      </g>
+      <g>
+        <path d="M800 0 V96" stroke="#c8a765" stroke-opacity=".5"/>
+        <g stroke="#c8a765" stroke-opacity=".55" fill="none">
+          <path d="M800 96 C740 120 700 150 690 186 M800 96 C860 120 900 150 910 186 M800 96 C770 130 756 160 752 196 M800 96 C830 130 844 160 848 196"/>
+        </g>
+        <g>
+          <circle cx="690" cy="192" r="26" fill="url(#cdl)" filter="url(#b6)" class="candle"/>
+          <circle cx="910" cy="192" r="26" fill="url(#cdl)" filter="url(#b6)" class="candle b"/>
+          <circle cx="752" cy="202" r="22" fill="url(#cdl)" filter="url(#b6)" class="candle c"/>
+          <circle cx="848" cy="202" r="22" fill="url(#cdl)" filter="url(#b6)" class="candle"/>
+          <circle cx="800" cy="150" r="30" fill="url(#cdl)" filter="url(#b6)" class="candle b"/>
+        </g>
+      </g>
+      <polygon points="740,150 560,780 1040,780 860,150" fill="url(#shaft)" filter="url(#b18)"/>
+      <ellipse cx="800" cy="520" rx="640" ry="300" fill="url(#vol)" filter="url(#b40)"/>
+      <g fill="#050403">
+        <circle cx="430" cy="548" r="37"/>
+        <path d="M356 706 Q366 600 430 584 Q494 600 504 706 Z"/>
+        <circle cx="1170" cy="548" r="37"/>
+        <path d="M1096 706 Q1106 600 1170 584 Q1234 600 1244 706 Z"/>
+      </g>
+      <g stroke="#e8cf9e" stroke-opacity=".16" fill="none">
+        <path d="M398 528 Q430 506 462 528"/>
+        <path d="M1138 528 Q1170 506 1202 528"/>
+      </g>
+      <path d="M300 1000 L480 700 H1120 L1300 1000 Z" fill="#0a0806"/>
+      <path d="M560 700 H1040 L1092 1000 H508 Z" fill="#d8c6a4" opacity=".10"/>
+      <g>
+        <rect x="618" y="664" width="4" height="30" fill="#d9c8a8" opacity=".7"/>
+        <rect x="798" y="656" width="4" height="34" fill="#d9c8a8" opacity=".7"/>
+        <rect x="978" y="664" width="4" height="30" fill="#d9c8a8" opacity=".7"/>
+        <circle cx="620" cy="656" r="30" fill="url(#cdl)" filter="url(#b6)" class="candle c"/>
+        <circle cx="800" cy="648" r="34" fill="url(#cdl)" filter="url(#b6)" class="candle"/>
+        <circle cx="980" cy="656" r="30" fill="url(#cdl)" filter="url(#b6)" class="candle b"/>
+      </g>
+      <g stroke="#e9e0cf" stroke-opacity=".28">
+        <path d="M700 690 V668 M694 668 H706 M898 690 V668 M892 668 H904"/>
+      </g>
+      <g class="dust" fill="#e9dcc0">
+        <circle cx="520" cy="420" r="1.6" opacity=".3"/>
+        <circle cx="1080" cy="380" r="1.4" opacity=".25"/>
+        <circle cx="860" cy="470" r="1.2" opacity=".3"/>
+        <circle cx="680" cy="330" r="1.2" opacity=".2"/>
+        <circle cx="1180" cy="470" r="1.6" opacity=".22"/>
+      </g>
+    </svg>
+  </div>
+  <div class="scrim"></div>
+  <div class="about-inner">
+    <p class="kicker rv">О сервисе</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>ВРЕМЯ, КОТОРОЕ</span></span>
+      <span class="line rv-line"><span>ИМЕЕТ ЦЕННОСТЬ</span></span>
+    </h2>
+    <p class="quote rv" style="--d:.2s">«Иногда ценность вечера определяется не местом,<br>а человеком, с которым вы его проводите.»</p>
+    <p class="body-txt rv" style="--d:.32s">Сервис выстроен вокруг содержательного общения: культурные и светские мероприятия, премьеры и закрытые выставки, деловые ужины, путешествия и события, где важно безупречное присутствие рядом.</p>
+    <p class="body-txt rv" style="--d:.44s">Каждый формат обсуждается индивидуально и заранее — в границах, комфортных для вас. Ничего лишнего: только такт, воспитание и умение вести разговор, который хочется продолжить.</p>
+  </div>
+</section>
+
+<section class="bio" id="bio">
+  <div class="bio-inner">
+    <div class="bio-visual rv">
+      <img src="assets/portrait.png" alt="Дмитрий Соевый">
+      <div class="cap">Дмитрий Соевый · основатель практики</div>
+    </div>
+    <div class="bio-copy">
+      <p class="kicker rv">Практика</p>
+      <h2 class="big">
+        <span class="line rv-line"><span>ИСКУССТВО</span></span>
+        <span class="line rv-line"><span>БЫТЬ УМЕСТНЫМ</span></span>
+      </h2>
+      <p class="tx rv">Дмитрий работает в пространстве светского и культурного сопровождения более тринадцати лет: закрытые премьеры и аукционные вечера, частные коллекции, деловые ужины, длительные поездки. За это время — сотни вечеров, десятки городов и одно неизменное правило: никаких подробностей о своих спутниках он не обсуждает ни с кем и никогда.</p>
+      <p class="tx rv">История искусства и международные отношения, свободный русский, английский и французский. Дмитрий держится ровно и незаметно, умеет поддержать разговор и вовремя его закончить — и никогда не занимает чужое пространство.</p>
+      <div class="bio-list rv">
+        <div>История искусства · образование</div>
+        <div>Русский · English · Français</div>
+        <div>Театры, аукционы, архитектура</div>
+        <div>Москва · выезды по договорённости</div>
+        <div>Сдержанная классика в одежде</div>
+        <div>Никаких публичных упоминаний</div>
+      </div>
+      <p class="bio-sign rv">«Моя работа — быть уместным. Всё остальное — детали, которые мы обсудим лично.»</p>
+    </div>
+  </div>
+</section>
+
+<section class="facts">
+  <div class="facts-grid">
+    <div class="fact rv"><b>2011</b><span>Год начала практики</span></div>
+    <div class="fact rv" style="--d:.1s"><b>17</b><span>Стран, где проходило сопровождение</span></div>
+    <div class="fact rv" style="--d:.2s"><b>3</b><span>Языка общения</span></div>
+    <div class="fact rv" style="--d:.3s"><b>0</b><span>Раскрытых имён за всю историю</span></div>
+  </div>
+</section>
+
+<section class="formats" id="formats">
+  <div class="marble"></div>
+  <div class="formats-head">
+    <div>
+      <p class="kicker rv">Форматы</p>
+      <h2 class="big"><span class="line rv-line"><span>ФОРМАТ, КОТОРЫЙ</span></span><span class="line rv-line"><span>ПОДХОДИТ ВАМ</span></span></h2>
+    </div>
+    <p class="note rv" style="--d:.2s">Четыре основания практики.<br>Каждое существует отдельно —<br>или сочетается в личном сценарии.</p>
+  </div>
+  <div class="fgrid">
+    <article class="fcard fc1 rv">
+      <span class="num">I</span>
+      <h3>КУЛЬТУРА</h3>
+      <div class="hair"></div>
+      <p>Театры, выставки, галереи и закрытые мероприятия.</p>
+    </article>
+    <article class="fcard fc2 rv" style="--d:.12s">
+      <span class="num">II</span>
+      <h3>ОБЩЕНИЕ</h3>
+      <div class="hair"></div>
+      <p>Интеллектуальная беседа, ужины и совместное время.</p>
+    </article>
+    <article class="fcard fc3 rv" style="--d:.2s">
+      <span class="num">III</span>
+      <h3>ПУТЕШЕСТВИЯ</h3>
+      <div class="hair"></div>
+      <p>Сопровождение в поездках и на частных мероприятиях.</p>
+    </article>
+    <article class="fcard fc4 rv" style="--d:.28s">
+      <span class="num">IV</span>
+      <h3>ДЕЛОВОЙ ФОРМАТ</h3>
+      <div class="hair"></div>
+      <p>Светские и деловые события.</p>
+    </article>
+  </div>
+</section>
+
+<section class="steps" id="steps">
+  <p class="kicker rv">Как это происходит</p>
+  <h2 class="big">
+    <span class="line rv-line"><span>ЧЕТЫРЕ ШАГА,</span></span>
+    <span class="line rv-line"><span>НИ ОДНОГО ЛИШНЕГО</span></span>
+  </h2>
+  <div class="steps-grid">
+    <div class="step rv">
+      <b>01</b>
+      <h3>ЗАПРОС</h3>
+      <p>Вы пишете на закрытый адрес — коротко, в любой удобной форме. Без анкет, без посредников, без лишних вопросов.</p>
+    </div>
+    <div class="step rv" style="--d:.1s">
+      <b>02</b>
+      <h3>РАЗГОВОР</h3>
+      <p>Конфиденциальная беседа пятнадцать–двадцать минут: повод, даты, ваши ожидания и любые ограничения.</p>
+    </div>
+    <div class="step rv" style="--d:.2s">
+      <b>03</b>
+      <h3>СОГЛАСОВАНИЕ</h3>
+      <p>Формат, дресс-код, логистика и границы фиксируются заранее. Всё, что не согласовано, — не происходит.</p>
+    </div>
+    <div class="step rv" style="--d:.3s">
+      <b>04</b>
+      <h3>ВСТРЕЧА</h3>
+      <p>Дмитрий приезжает ровно вовремя, держится ровно своей роли и уходит ровно тогда, когда это уместно.</p>
+    </div>
+  </div>
+  <p class="steps-note rv">Между этими шагами не бывает неожиданностей.</p>
+</section>
+
+<section class="timeline" id="evening">
+  <div class="sh">
+    <p class="kicker rv" style="margin-bottom:26px">Портрет вечера</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>ПЯТЬ ЧАСОВ,</span></span>
+      <span class="line rv-line"><span>РАСПИСАННЫХ ПО МИНУТАМ</span></span>
+    </h2>
+  </div>
+  <div class="tl">
+    <div class="tl-i rv">
+      <b>19:20</b>
+      <h3>АВТОМОБИЛЬ</h3>
+      <p>Водитель у вашего адреса. Дмитрий уже в пути или ждёт на месте — как удобнее вам.</p>
+    </div>
+    <div class="tl-i rv" style="--d:.08s">
+      <b>20:00</b>
+      <h3>ФОЙЕ</h3>
+      <p>Встреча у входа, короткое приветствие, бокал до третьего звонка. Никаких объятий и лишнего внимания.</p>
+    </div>
+    <div class="tl-i rv" style="--d:.16s">
+      <b>20:30</b>
+      <h3>ЗАЛ</h3>
+      <p>Ложа или партер — по вашему выбору. Разговор о программе, о музыке, о вчерашних новостях, но тихо.</p>
+    </div>
+    <div class="tl-i rv" style="--d:.24s">
+      <b>22:15</b>
+      <h3>УЖИН</h3>
+      <p>Стол, заказанный заранее, и беседа, в которой вам не приходится ничего объяснять дважды.</p>
+    </div>
+    <div class="tl-i rv" style="--d:.32s">
+      <b>00:00</b>
+      <h3>ВОЗВРАЩЕНИЕ</h3>
+      <p>Дмитрий довозит вас до дома или вызывает машину. Дальше — тишина и никаких сообщений.</p>
+    </div>
+  </div>
+  <p class="tl-note rv">Расписание — пример. Ваш вечер может выглядеть иначе. Так же ровно.</p>
+</section>
+
+<section class="geo" id="geo">
+  <div class="geo-head">
+    <p class="kicker rv" style="margin-bottom:26px">География</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>ГОРОДА И СЕЗОНЫ</span></span>
+    </h2>
+  </div>
+  <div class="geo-grid">
+    <div>
+      <div class="city rv"><b>Москва</b><span>постоянно</span></div>
+      <div class="city rv" style="--d:.06s"><b>Санкт-Петербург</b><span>по договорённости</span></div>
+      <div class="city rv" style="--d:.12s"><b>Дубай</b><span>сезонно</span></div>
+      <div class="city rv" style="--d:.18s"><b>Милан</b><span>сезонно</span></div>
+      <div class="city rv" style="--d:.24s"><b>Париж</b><span>по запросу</span></div>
+      <div class="city rv" style="--d:.3s"><b>Лондон</b><span>по запросу</span></div>
+      <div class="city rv" style="--d:.36s"><b>Женева · Монако</b><span>по запросу</span></div>
+    </div>
+    <div>
+      <div class="season rv"><b>Осень</b><p>Премьеры и театральные сезоны, аукционные вечера, закрытые показы и недели искусства.</p></div>
+      <div class="season rv" style="--d:.08s"><b>Зима</b><p>Горные курорты, приватные ужины, концерты в исторических залах.</p></div>
+      <div class="season rv" style="--d:.16s"><b>Весна</b><p>Биеннале, деловые форумы, светские приёмы и благотворительные вечера.</p></div>
+      <div class="season rv" style="--d:.24s"><b>Лето</b><p>Регаты, опен-эйры, южные террасы, длинные вечера и поездки.</p></div>
+      <p class="geo-note rv" style="--d:.3s">Выезд за пределы города — отдельный формат. Даты, программа и логистика согласуются заранее, размещение — отдельное.</p>
+    </div>
+  </div>
+</section>
+
+<section class="dates" id="dates">
+  <div class="sh">
+    <p class="kicker rv" style="margin-bottom:26px">Ближайшие даты сезона</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>КАЛЕНДАРЬ,</span></span>
+      <span class="line rv-line"><span>ОТКРЫТЫЙ ДЛЯ ЗАПРОСОВ</span></span>
+    </h2>
+  </div>
+  <div class="dt-list">
+    <div class="dt rv"><b>12 октября</b><span class="city">Москва</span><span class="ev">Премьера в историческом зале, ужин после</span><i>открыто</i></div>
+    <div class="dt rv" style="--d:.06s"><b>27 октября</b><span class="city">Санкт-Петербург</span><span class="ev">Аукционный вечер и приватный просмотр</span><i>1 слот</i></div>
+    <div class="dt rv" style="--d:.12s"><b>09 ноября</b><span class="city">Москва</span><span class="ev">Деловой приём, сопровождение на переговорах</span><i>открыто</i></div>
+    <div class="dt rv" style="--d:.18s"><b>24 ноября</b><span class="city">Дубай</span><span class="ev">Светский ужин и выставка современного искусства</span><i>2 слота</i></div>
+    <div class="dt rv" style="--d:.24s"><b>19 декабря</b><span class="city">Париж</span><span class="ev">Оперный вечер и поздний ужин на террасе</span><i>закрыто</i></div>
+    <div class="dt rv" style="--d:.3s"><b>14 января</b><span class="city">Куршевель</span><span class="ev">Горный уикенд, концерт и приватная встреча</span><i>по запросу</i></div>
+  </div>
+</section>
+
+<section class="presence" id="presence">
+  <div class="sh">
+    <p class="kicker rv" style="margin-bottom:26px">Форматы присутствия</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>ВЕЧЕР, СЕЗОН</span></span>
+      <span class="line rv-line"><span>ИЛИ ПУТЕШЕСТВИЕ</span></span>
+    </h2>
+  </div>
+  <div class="presence-grid">
+    <div class="pcard rv">
+      <h3>ВЕЧЕР</h3>
+      <small>Одно событие</small>
+      <p>Один вечер, от встречи до возвращения домой. Спокойная, продуманная форма знакомства с практикой.</p>
+      <ul>
+        <li>От четырёх до шести часов</li>
+        <li>Дресс-код согласуется заранее</li>
+        <li>Логистика на стороне Дмитрия</li>
+      </ul>
+    </div>
+    <div class="pcard rv" style="--d:.12s">
+      <h3>СЕЗОН</h3>
+      <small>Культурный ритм</small>
+      <p>Спутник, который знает ваш календарь: премьеры, аукционы, приёмы и ужины в течение сезона.</p>
+      <ul>
+        <li>Не более четырёх постоянных спутников в сезоне</li>
+        <li>Приоритет при выборе дат</li>
+        <li>Один канал связи, один куратор тем</li>
+      </ul>
+    </div>
+    <div class="pcard rv" style="--d:.24s">
+      <h3>ПУТЕШЕСТВИЕ</h3>
+      <small>Выездной формат</small>
+      <p>Город за городом, страна за страной. Дмитрий держит логистику, программу и разговор в одной руке.</p>
+      <ul>
+        <li>От двух дней до двух недель</li>
+        <li>Отдельное размещение и транспорт</li>
+        <li>План на каждый день — заранее</li>
+      </ul>
+    </div>
+  </div>
+  <p class="presence-note rv">Организационные условия обсуждаются лично · без публичных прайсов</p>
+</section>
+
+<section class="principles" id="principles">
+  <div class="halo"></div>
+  <div class="halo-ring"></div>
+  <p class="kicker rv" style="position:relative;z-index:2">Принципы</p>
+  <h2 class="big"><span class="line rv-line"><span>ДИСКРЕТНОСТЬ — ОСНОВА</span></span></h2>
+  <div class="plist">
+    <div class="pitem rv"><span class="n">01</span><h3>Конфиденциальность</h3><p>Ни имён, ни деталей, ни обстоятельств. История каждого знакомства остаётся внутри него.</p></div>
+    <div class="pitem rv" style="--d:.1s"><span class="n">02</span><h3>Уважение личных границ</h3><p>Дистанция, ритм и темы общения всегда определяете вы — и они не подвергаются обсуждению.</p></div>
+    <div class="pitem rv" style="--d:.2s"><span class="n">03</span><h3>Добровольность</h3><p>Любой формат возможен только при обоюдном, свободном и осознанном согласии сторон.</p></div>
+    <div class="pitem rv" style="--d:.3s"><span class="n">04</span><h3>Безопасность</h3><p>Прозрачные договорённости, предсказуемые правила и безусловная надёжность во всём.</p></div>
+    <div class="pitem rv" style="--d:.4s"><span class="n">05</span><h3>Соблюдение законодательства</h3><p>Практика существует строго в правовом поле и не допускает ничего, что выходит за его пределы.</p></div>
+  </div>
+  <div class="excl rv">
+    <h3>ЧТО НЕ ВХОДИТ В ПРАКТИКУ</h3>
+    <ul>
+      <li>Интимные отношения любого рода</li>
+      <li>Любые действия вне правового поля</li>
+      <li>Сопровождение под чужим именем</li>
+      <li>Участие в конфликтах и интригах</li>
+      <li>Употребление запрещённых веществ</li>
+      <li>Публичность и упоминание имён</li>
+    </ul>
+  </div>
+  <p class="legal rv" style="--d:.3s">Легально · Дискретно · Строго неинтимно</p>
+</section>
+
+<section class="etq" id="etiquette">
+  <div class="sh">
+    <p class="kicker rv" style="margin-bottom:26px">Подготовка и правила</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>ВСЁ, ЧТО НУЖНО ЗНАТЬ</span></span>
+      <span class="line rv-line"><span>ДО ПЕРВОГО ВЕЧЕРА</span></span>
+    </h2>
+  </div>
+  <div class="etq-grid">
+    <div class="etq-col">
+      <h3>КАК ГОТОВИТСЯ ДМИТРИЙ</h3>
+      <ol>
+        <li>Изучает программу вечера, историю зала и контекст события.</li>
+        <li>Уточняет имена, статусы и то, как вас следует представить.</li>
+        <li>Проверяет тайминги, входы, парковку и маршрут до ужина.</li>
+        <li>Подбирает три–четыре темы для беседы и темы-табу.</li>
+      </ol>
+    </div>
+    <div class="etq-col">
+      <h3>ПРАВИЛА ВЕЧЕРА</h3>
+      <ol>
+        <li>Телефон на беззвучном. Никаких снимков — даже по просьбе.</li>
+        <li>Дмитрий представляется только так, как согласовано с вами.</li>
+        <li>Не более одного бокала за вечер. Ясность важнее тоста.</li>
+        <li>Третьи лица в разговоре не обсуждаются. Никогда.</li>
+      </ol>
+    </div>
+    <div class="etq-col">
+      <h3>ПРИЗНАКИ НАСТОЯЩЕЙ ПРАКТИКИ</h3>
+      <ol>
+        <li>Никогда не запрашивает предоплату по незнакомым реквизитам.</li>
+        <li>Не публикует фотографии и не упоминает имён спутников.</li>
+        <li>Не обещает невозможного и говорит прямо о границах.</li>
+        <li>Не торопит с решением и выдерживает паузу, если она нужна.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="voices" id="voices">
+  <div class="voices-head">
+    <p class="kicker rv" style="margin-bottom:26px">Впечатления</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>СЛОВА, СКАЗАННЫЕ</span></span>
+      <span class="line rv-line"><span>ПОСЛЕ ВЕЧЕРА</span></span>
+    </h2>
+  </div>
+  <div class="voices-grid">
+    <div class="voice rv">
+      <q>Я ценю, когда не нужно ничего объяснять. Дмитрий понял формат с первого разговора — и ни разу не вышел за его пределы.</q>
+      <div class="who">А. · 57 · промышленность</div>
+    </div>
+    <div class="voice rv" style="--d:.12s">
+      <q>За два года — ни одной неуместной фразы и ни одного лишнего вопроса. Это дороже, чем билеты и ужины вместе.</q>
+      <div class="who">С. · 63 · инвестиции</div>
+    </div>
+    <div class="voice rv" style="--d:.24s">
+      <q>Он незаметен в зале и интересен за столом. Ровно то, что нужно, когда пришёл ради дела и разговора.</q>
+      <div class="who">М. · 55 · коллекционер</div>
+    </div>
+  </div>
+  <p class="voices-note rv">Имена не раскрываются · публикуется с согласия спутников</p>
+</section>
+
+<section class="notes" id="notes">
+  <div class="sh">
+    <p class="kicker rv" style="margin-bottom:26px">Записки практики</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>ТРИ НАБЛЮДЕНИЯ</span></span>
+      <span class="line rv-line"><span>О ХОРОШЕМ ВЕЧЕРЕ</span></span>
+    </h2>
+  </div>
+  <div class="notes-grid">
+    <div class="note rv">
+      <b>Записка первая</b>
+      <h3>О ТИШИНЕ В ЛОЖЕ</h3>
+      <p>Лучший спутник — тот, кто умеет молчать в правильный момент. Антракт не требует разговора, и пауза часто говорит больше, чем комплимент. Я научился этому за тринадцать лет и до сих пор считаю это главным навыком.</p>
+    </div>
+    <div class="note rv" style="--d:.12s">
+      <b>Записка вторая</b>
+      <h3>КАК ЗАКАНЧИВАЕТСЯ ВЕЧЕР</h3>
+      <p>Вечер заканчивается ровно там, где вы решили. Машина у входа, короткое прощание, ни одного сообщения наутро. Отсутствие продолжения — это не холодность, это уважение к вашему времени и к вашей жизни.</p>
+    </div>
+    <div class="note rv" style="--d:.24s">
+      <b>Записка третья</b>
+      <h3>ПЕРВОЕ ВПЕЧАТЛЕНИЕ</h3>
+      <p>Первые десять минут решают всё: как человек входит, как здоровается, куда смотрит. Поэтому я приезжаю раньше и ухожу позже — чтобы у вас не было ни одной организационной заботы в вечер, который должен принадлежать вам.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="faq-head">
+    <p class="kicker rv" style="margin-bottom:26px">Вопросы</p>
+    <h2 class="big">
+      <span class="line rv-line"><span>КОРОТКО</span></span>
+      <span class="line rv-line"><span>И ПО СУЩЕСТВУ</span></span>
+    </h2>
+  </div>
+  <div class="faq-list">
+    <details class="qa rv">
+      <summary>Что входит в социальное сопровождение?</summary>
+      <p>Присутствие на культурных и светских мероприятиях, интеллектуальная беседа, ужины, деловые встречи, путешествия и события, где важен тактичный спутник. Общение всегда социальное и строго неинтимное.</p>
+    </details>
+    <details class="qa rv" style="--d:.06s">
+      <summary>Что категорически не входит в практику?</summary>
+      <p>Интимные отношения любого рода, любые действия вне правового поля, сопровождение под чужим именем, участие в конфликтах, интригах и сомнительных схемах. Нарушение этих границ означает немедленное завершение сотрудничества.</p>
+    </details>
+    <details class="qa rv" style="--d:.12s">
+      <summary>Как обеспечивается конфиденциальность?</summary>
+      <p>Один закрытый адрес, отсутствие публичных упоминаний и фотографий, деликатная логистика, при необходимости — раздельный транспорт и отдельные входы. Никакие детали не обсуждаются с третьими лицами.</p>
+    </details>
+    <details class="qa rv" style="--d:.18s">
+      <summary>Возможны ли поездки и сопровождение за границей?</summary>
+      <p>Да. Выездной формат согласуется заранее: даты, программа, визовые и логистические вопросы, отдельное размещение, план на каждый день.</p>
+    </details>
+    <details class="qa rv" style="--d:.24s">
+      <summary>Как обсуждаются организационные условия?</summary>
+      <p>Лично и конфиденциально, после первого разговора. Никаких публичных прайсов, посредников и предоплат по незнакомым реквизитам.</p>
+    </details>
+    <details class="qa rv" style="--d:.3s">
+      <summary>Кто может обратиться?</summary>
+      <p>Совершеннолетние состоявшиеся люди, которым важны такт, культура общения и полная приватность. Практика не предполагает публичности и не работает с неуважительными запросами.</p>
+    </details>
+    <details class="qa rv" style="--d:.36s">
+      <summary>Как быстро приходит ответ?</summary>
+      <p>В течение двадцати четырёх часов, иногда раньше. Дальше — в вашем ритме: столько разговоров и встреч, сколько вам действительно нужно.</p>
+    </details>
+    <details class="qa rv" style="--d:.42s">
+      <summary>Что если событие отменится или перенесётся?</summary>
+      <p>Дата переносится без потерь для вас: практика не работает по предоплатам за присутствие, а логистика пересобирается заново. Дмитрий сообщит об изменении сразу, как только узнает сам.</p>
+    </details>
+    <details class="qa rv" style="--d:.48s">
+      <summary>Можно ли пригласить Дмитрия на семейное торжество?</summary>
+      <p>Да, если формат остаётся светским и неинтимным, а роль в событии обозначена заранее. Для семейных вечеров мы отдельно проговариваем, как представить спутника и какие темы остаются закрытыми.</p>
+    </details>
+    <details class="qa rv" style="--d:.54s">
+      <summary>Что если после первого вечера я передумаю?</summary>
+      <p>Вы ничего не должны. Практика не предполагает обязательств, подписок и автоматических продлений. Одно короткое сообщение — и вопрос закрыт без объяснений.</p>
+    </details>
+  </div>
+</section>
+
+<section class="final" id="kontakt">
+  <h2>
+    <span class="line rv-line"><span>ВАШЕ ВРЕМЯ.</span></span>
+    <span class="line rv-line"><span>ВАШ ФОРМАТ.</span></span>
+    <span class="line rv-line"><span>ВАШИ ПРАВИЛА.</span></span>
+  </h2>
+  <p class="small rv" style="--d:.3s">Индивидуальное социальное сопровождение<br>с уважением к вашим границам и приватности.</p>
+  <a class="btn rv" style="--d:.45s" href="mailto:concierge@dmitry-soevy.com?subject=%D0%97%D0%B0%D0%BF%D1%80%D0%BE%D1%81%20%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0"><i></i>Обсудить формат</a>
+  <div class="contact-line rv" style="--d:.55s">
+    <span>Закрытый адрес для запросов</span>
+    <a href="mailto:concierge@dmitry-soevy.com">concierge@dmitry-soevy.com</a>
+    <span>Ответ — в течение двадцати четырёх часов</span>
+  </div>
+  <footer>
+    <span>© MMXXVI · Дмитрий Соевый</span>
+    <span>Социальное сопровождение · совершеннолетним клиентам</span>
+    <span>concierge@dmitry-soevy.com</span>
+  </footer>
+</section>
+</main>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var stars = document.getElementById('stars');
+  if (stars) {
+    var html = '';
+    for (var i = 0; i < 46; i++) {
+      var x = Math.random() * 100, y = Math.random() * 78;
+      var d = (Math.random() * 6).toFixed(2), s = Math.random() > .82 ? 3 : 2;
+      html += '<i style="left:' + x.toFixed(2) + '%;top:' + y.toFixed(2) + '%;width:' + s + 'px;height:' + s + 'px;animation-delay:-' + d + 's"></i>';
+    }
+    stars.innerHTML = html;
+  }
+
+  window.addEventListener('load', function(){
+    setTimeout(function(){ document.body.classList.add('ready'); }, 120);
+  });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.rv, .rv-line').forEach(function(el){ io.observe(el); });
+
+  var nav = document.getElementById('nav');
+  var scene = document.getElementById('scene');
+  var figureWrap = document.getElementById('figureWrap');
+  var heroCopy = document.querySelector('.hero-copy');
+  var ticking = false;
+
+  function onScroll(){
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY || 0;
+      nav.classList.toggle('scrolled', y > 40);
+      if (scene) {
+        var r = scene.parentElement.getBoundingClientRect();
+        var p = (r.top + r.height / 2 - window.innerHeight / 2);
+        scene.style.transform = 'translate3d(0,' + (p * -0.10).toFixed(1) + 'px,0) scale(1.12)';
+      }
+      if (figureWrap && y < window.innerHeight * 1.2) {
+        figureWrap.style.marginTop = (y * 0.06).toFixed(1) + 'px';
+        if (heroCopy) heroCopy.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.85)).toFixed(2);
+      }
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  if (!reduced) {
+    var tx = 0, ty = 0, cx = 0, cy = 0;
+    var glasses = Array.prototype.slice.call(document.querySelectorAll('.glass'));
+    var gr = glasses.map(function(){ return { rx: 0, ry: 0, trx: 0, try_: 0, px: 0, py: 0, tpx: 0, tpy: 0 }; });
+
+    window.addEventListener('mousemove', function(e){
+      tx = (e.clientX / window.innerWidth) * 2 - 1;
+      ty = (e.clientY / window.innerHeight) * 2 - 1;
+      glasses.forEach(function(g, i){
+        var r = g.getBoundingClientRect();
+        var gx = (e.clientX - (r.left + r.width / 2)) / window.innerWidth;
+        var gy = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
+        var depth = parseFloat(g.getAttribute('data-depth')) || 16;
+        gr[i].tpx = -gx * depth * 2.2;
+        gr[i].tpy = -gy * depth * 2.2;
+        gr[i].try_ = gx * 7;
+        gr[i].trx = -gy * 7;
+      });
+    });
+
+    (function loop(){
+      cx += (tx - cx) * 0.055;
+      cy += (ty - cy) * 0.055;
+      document.querySelector('.hero').style.setProperty('--mx', cx.toFixed(4));
+      document.querySelector('.hero').style.setProperty('--my', cy.toFixed(4));
+      glasses.forEach(function(g, i){
+        var s = gr[i];
+        s.px += (s.tpx - s.px) * 0.07;
+        s.py += (s.tpy - s.py) * 0.07;
+        s.rx += (s.trx - s.rx) * 0.07;
+        s.ry += (s.try_ - s.ry) * 0.07;
+        g.style.transform = 'translate3d(' + s.px.toFixed(2) + 'px,' + s.py.toFixed(2) + 'px,0) perspective(900px) rotateX(' + s.rx.toFixed(2) + 'deg) rotateY(' + s.ry.toFixed(2) + 'deg)';
+      });
+      requestAnimationFrame(loop);
+    })();
+  }
+})();
+</script>
+</body>
+</html>
